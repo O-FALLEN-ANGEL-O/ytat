@@ -24,7 +24,7 @@ pytz==2023.3
 gunicorn==21.2.0
 
 # Image processing (lightweight)
-Pillow==10.0.1
+Pillow==9.5.0
 
 # Basic text processing
 Jinja2==3.1.2
