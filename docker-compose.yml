@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - SECRET_KEY=your-secret-key-here
+    volumes:
+      - ./videos:/app/videos
+      - ./logs:/app/logs
+      - ./automation.db:/app/automation.db
+      - ./client_secrets.json:/app/client_secrets.json
+      - ./youtube_credentials.pkl:/app/youtube_credentials.pkl
+    command: python web_app.py
+    
+  automation:
+    build: .
+    environment:
+      - PYTHONPATH=/app
+    volumes:
+      - ./videos:/app/videos
+      - ./logs:/app/logs
+      - ./automation.db:/app/automation.db
+      - ./client_secrets.json:/app/client_secrets.json
+      - ./youtube_credentials.pkl:/app/youtube_credentials.pkl
+    command: python main.py
+    depends_on:
+      - web
+
+volumes:
+  videos:
+  logs:
